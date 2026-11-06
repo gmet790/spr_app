@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1f6f5c">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Αίτημα ανταλλακτικών</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+<style>
+:root{--bg:#f5f6f4;--surf:#fff;--ink:#1d2421;--mute:#66706b;--line:#dde1de;--acc:#1f6f5c;--acc-ink:#fff;--sel:#e3f1ec;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151a18;--surf:#1e2522;--ink:#e8ece9;--mute:#98a39d;--line:#323b37;--acc:#4fb79d;--acc-ink:#0d1512;--sel:#23372f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#151a18;--surf:#1e2522;--ink:#e8ece9;--mute:#98a39d;--line:#323b37;--acc:#4fb79d;--acc-ink:#0d1512;--sel:#23372f;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 "Segoe UI",system-ui,sans-serif}
+header{padding:18px 24px 6px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+h1{font-size:20px;margin:0;font-weight:650}
+h2{font-size:15px;margin:0 0 10px;font-weight:650}
+main{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(300px,1fr);gap:18px;padding:12px 24px 28px;align-items:start}
+@media(max-width:900px){main{grid-template-columns:1fr}}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:8px;padding:16px}
+.tabs{display:flex;gap:4px;margin-bottom:12px}
+.tabs button{border:1px solid var(--line);background:transparent;color:var(--ink);padding:7px 14px;border-radius:6px;cursor:pointer;font:inherit}
+.tabs button.on{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+.bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:7px 9px;min-width:0}
+input[type=search]{flex:1 1 220px}
+textarea{width:100%;resize:vertical}
+:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+.btn{background:var(--acc);color:var(--acc-ink);border:0;border-radius:6px;padding:8px 14px;cursor:pointer;font:inherit;font-weight:600}
+.btn.sec{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:500}
+.file{display:inline-block}
+.file input{display:none}
+.wrap{overflow-x:auto;max-height:56vh;overflow-y:auto}
+table{border-collapse:collapse;width:100%}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{position:sticky;top:0;background:var(--surf);color:var(--mute);font-weight:600}
+tbody tr.r{cursor:pointer}
+tbody tr.r:hover{background:var(--sel)}
+:root{--zebra:#f0f3f1}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--zebra:#252d29}}
+:root[data-theme="dark"]{--zebra:#252d29}
+.wrap tbody tr:nth-child(even){background:var(--zebra)}
+.wrap tbody tr:hover{background:var(--sel)}
+.wrap tbody tr.on{background:var(--sel)}
+.stk th,.stk td{position:sticky}
+.stk th{z-index:2;top:0}
+.stk td:nth-child(-n+2),.stk th:nth-child(-n+2){background:var(--surf);z-index:1}
+.stk th:nth-child(-n+2){z-index:3}
+.stk tbody tr:nth-child(even) td:nth-child(-n+2){background:var(--zebra)}
+.stk tbody tr:hover td:nth-child(-n+2){background:var(--sel)}
+.stk th:nth-child(1),.stk td:nth-child(1){left:0;min-width:160px;max-width:160px}
+.stk th:nth-child(2),.stk td:nth-child(2){left:160px;min-width:240px;max-width:240px;white-space:normal;box-shadow:2px 0 0 var(--line)}
+.stk td:nth-child(n+3){position:static}
+@media(max-width:700px){.stk th:nth-child(1),.stk td:nth-child(1){min-width:110px;max-width:110px}.stk th:nth-child(2){left:auto;min-width:170px;max-width:170px}.stk td:nth-child(2){position:static;left:auto;min-width:170px;max-width:170px;box-shadow:none}main{padding:10px 12px 24px}header{padding:14px 12px 4px}}
+.mute{color:var(--mute)}
+.empty{padding:22px;text-align:center;color:var(--mute);white-space:normal}
+label{display:block;margin:10px 0 3px;color:var(--mute);font-size:13px}
+.side input,.side select{width:100%}
+.item{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid var(--line)}
+.item button{background:none;border:0;color:var(--mute);cursor:pointer;font-size:16px}
+.q{width:64px}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.note{font-size:13px;color:var(--mute);margin-top:10px}
+#msg{margin-top:8px;font-size:13px;color:var(--acc)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Αίτημα ανταλλακτικών</h1>
+  <div class="bar" style="margin:0">
+    <button class="btn sec" id="bi">Φόρτωση εξοπλισμού</button>
+    <button class="btn sec" id="bs">Φόρτωση αποθήκης</button>
+    <button class="btn" id="rf">↻ Ανανέωση αρχείων</button>
+    <input type="file" id="fi" accept=".xlsx,.xls,.csv" hidden><input type="file" id="fs" accept=".xlsx,.xls,.csv" hidden>
+  </div>
+</header>
+<div class="note" id="st" style="padding:0 24px;margin:0"></div>
+<main>
+  <section class="card">
+    <div class="tabs"><button id="t1" class="on">Εξοπλισμός</button><button id="t2">Ανταλλακτικά</button></div>
+    <div class="bar">
+      <input type="search" id="q" placeholder="Αναζήτηση…">
+      <select id="fm"></select>
+      <select id="fc"></select>
+    </div>
+    <div class="wrap"><table><thead id="th"></thead><tbody id="tb"></tbody></table></div>
+    <div class="note" id="cnt"></div>
+  </section>
+  <section class="card side">
+    <h2>Αίτημα</h2>
+    <div id="si" class="mute">Επιλέξτε εξοπλισμό από τη λίστα ή πληκτρολογήστε πελάτη παρακάτω.</div>
+    <label for="cu">Πελάτης / Χώρος</label><input id="cu">
+    <label for="ad">Διεύθυνση (προαιρετικό)</label><input id="ad">
+    <label>Ανταλλακτικά</label>
+    <div id="pl" class="mute">Δεν έχουν προστεθεί ανταλλακτικά.</div>
+    <label for="rq">Αιτών</label><input id="rq">
+    <label for="ur">Προτεραιότητα</label>
+    <select id="ur"><option>Κανονική</option><option>Επείγον</option><option>Εκτός λειτουργίας</option></select>
+    <label for="sk">Σκοπός διακίνησης</label>
+    <select id="sk"><option value="">Επιλέξτε…</option><option>Ανάλωση ανταλλακτικού για ιδία χρήση</option><option>Έλεγχος</option><option>Επισκευή</option><option>Έλεγχος - Επισκευή</option><option>Συντήρηση</option><option>Εγκατάσταση</option><option>Ενδοδιακίνηση αποθεμάτων</option></select>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div><label for="ys">Αρ. Υπόθεσης</label><input id="ys"></div><div><label for="dt">Αρ. ΔΤΕ</label><input id="dt"></div></div>
+    <label for="nt">Σημειώσεις</label><textarea id="nt" rows="5"></textarea>
+    <label for="to">Email λογιστηρίου</label><input id="to" type="email" placeholder="logistirio@etaireia.gr">
+    <label for="ol">Το Outlook μου</label><select id="ol"><option value="c">Κλασικό (desktop)</option><option value="n">Νέο / web</option></select>
+    <label style="display:flex;gap:6px;align-items:center;margin-top:12px"><input type="checkbox" id="ap" checked style="width:auto"> Επισύναψη PDF επιβεβαίωσης</label>
+    <div class="acts">
+      <button class="btn" id="eml">Δημιουργία email</button>
+      <button class="btn sec" id="cp">Αντιγραφή κειμένου</button>
+      <button class="btn sec" id="pd">Λήψη PDF</button>
+      <button class="btn" id="sh">Κοινοποίηση (κινητό)</button>
+    </div>
+    <div id="msg"></div>
+    <textarea id="pv" rows="9" readonly hidden></textarea>
+    <div class="note">Το προσχέδιο ανοίγει στο Outlook (ή στο προεπιλεγμένο πρόγραμμα email) έτοιμο για αποστολή. Μια ιστοσελίδα δεν μπορεί να στείλει email αυτόματα χωρίς κλικ.</div>
+  </section>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+let inst=[],stock=[],sel=null,parts=[],tab=1;
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ς/g,'σ');
+const pick=(h,re,not)=>h.find(k=>{const s=norm(k);return re.test(s)&&!(not&&not.test(s))});
+const G=(h,r)=>(re,not)=>{const k=pick(h,re,not);return k?String(r[k]).trim():''};
+function load(file,cb){const r=new FileReader();r.onload=e=>cb(XLSX.read(e.target.result,{type:'array',cellDates:true}));r.readAsArrayBuffer(file)}
+function sheets(wb,skip,fn){const out=[];wb.SheetNames.forEach(n=>{if(skip&&skip.test(n))return;const a=XLSX.utils.sheet_to_json(wb.Sheets[n],{defval:'',raw:false});if(!a.length)return;const h=Object.keys(a[0]);a.forEach(r=>out.push(fn(n,h,r)))});return out}
+const fmtD=d=>{const x=new Date(d.getTime()+43200000),p=n=>String(n).padStart(2,'0');return p(x.getUTCDate())+'/'+p(x.getUTCMonth()+1)+'/'+x.getUTCFullYear()};
+function readInst(wb){
+  const out=[];
+  wb.SheetNames.forEach(n=>{
+    if(/διαστασ|stock|spare|αποθ/.test(norm(n)))return;
+    const rows=XLSX.utils.sheet_to_json(wb.Sheets[n],{header:1,defval:'',raw:true,blankrows:false});
+    let c=null;
+    rows.forEach(r=>{
+      const hs=r.map(norm);
+      if(hs.some(x=>/^εξοπλισμ/.test(x))&&hs.some(x=>/σειρ|serial/.test(x))){
+        const f=(re,not)=>hs.findIndex(x=>re.test(x)&&!(not&&not.test(x)));
+        c={type:f(/^εξοπλισμ/),code:f(/κωδικ/),sn:f(/σειρ|serial/),cust:f(/χωροσ|πελατ|customer|client/),rem:f(/παρατηρ/,/τεχν/),tech:f(/τεχν/),end:f(/ληξη/,/εγγ/),war:f(/εγγυηση/,/ληξη/),wend:f(/ληξη[\s\S]*εγγ/)};
+        return}
+      if(!c)return;
+      const v=i=>{const x=i>=0?r[i]:'';return x instanceof Date?fmtD(x):String(x??'').trim()};
+      if(!v(c.type)&&!v(c.sn))return;
+      const rem=v(c.rem),t=norm(rem);
+      out.push({man:n,type:v(c.type),code:v(c.code),sn:v(c.sn),cust:v(c.cust),
+        contract:/μισθωση|leasing/.test(t)?'Μίσθωση':/χρησιδανει/.test(t)?'Χρησιδάνειο':/αγορα/.test(t)?'Αγορά':'Άλλο',
+        remarks:rem,tech:v(c.tech),disc:(m=>m?parseFloat(m[1].replace(',','.')):0)(norm(v(c.tech)).match(/εκπτωση\s*(\d+(?:[.,]\d+)?)\s*%/)),end:v(c.end),war:v(c.war),wend:v(c.wend)});
+    });
+  });
+  return out;
+}
+function readStock(wb){
+  return sheets(wb,null,(n,h,r)=>{
+    const g=G(h,r);
+    return {ref:g(/^id$|κωδικ|ref|part|p\/?n|code/),desc:g(/descr|περιγραφ/),man:g(/supplier|κατασκευ|manuf|brand|make|προμηθ/)||n,wh:g(/warehouse|αποθηκ/),stk:g(/^stock$|^αποθεμα$|ποσοτ|qty/),av:g(/avail|διαθεσ/)}
+  }).filter(r=>r.ref||r.desc);
+}
+const K={i:{label:'Εξοπλισμός',parse:readInst,inp:'#fi'},s:{label:'Αποθήκη',parse:readStock,inp:'#fs'}};
+const S={i:{data:[],file:'',at:0,h:null},s:{data:[],file:'',at:0,h:null}};
+const FS=!!window.showOpenFilePicker&&window.top===window;
+const DB={
+  open(){return new Promise((res,rej)=>{const q=indexedDB.open('spareparts',1);q.onupgradeneeded=()=>q.result.createObjectStore('kv');q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)})},
+  async get(k){const d=await this.open();return new Promise((res,rej)=>{const r=d.transaction('kv').objectStore('kv').get(k);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})},
+  async set(k,v){const d=await this.open();return new Promise((res,rej)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=()=>res();t.onerror=()=>rej(t.error)})}
+};
+const keyOf=(k,r)=>k=='i'?r.man+'|'+r.sn+'|'+r.type:r.man+'|'+r.ref;
+function status(x){
+  const f=k=>S[k].at?K[k].label+': '+esc(S[k].file)+' ('+S[k].data.length+' εγγραφές, '+new Date(S[k].at).toLocaleString('el-GR')+')':'';
+  $('#st').innerHTML=[f('i'),f('s')].filter(Boolean).join(' · ')+(x?' — <strong>'+esc(x)+'</strong>':'');
+}
+async function ingest(k,wb,file,h){
+  const data=K[k].parse(wb),old=new Set(S[k].data.map(r=>keyOf(k,r))),first=!S[k].data.length;
+  const added=first?0:data.filter(r=>!old.has(keyOf(k,r))).length;
+  S[k]={data,file,at:Date.now(),h:h||null};
+  if(k=='i'){inst=data;if(sel)sel=inst.find(r=>keyOf('i',r)==keyOf('i',sel))||sel}else stock=data;
+  try{await DB.set(k,{...S[k],data:data.map(({_h,...r})=>r)})}catch(e){}
+  fill();render();side();
+  return {added,n:data.length};
+}
+async function readHandle(k,h){
+  const f=await h.getFile();
+  const wb=XLSX.read(await f.arrayBuffer(),{type:'array',cellDates:true});
+  return ingest(k,wb,f.name,h);
+}
+async function pickFile(k){
+  if(!FS){$(K[k].inp).click();return}
+  try{
+    const [h]=await showOpenFilePicker({types:[{description:'Excel',accept:{'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':['.xlsx','.xlsm'],'application/vnd.ms-excel':['.xls']}}]});
+    const r=await readHandle(k,h);setTab(k=='i'?1:2);
+    status(r.n?'':'Δεν βρέθηκαν εγγραφές. Ελέγξτε τις στήλες του αρχείου.');
+  }catch(e){if(e.name!='AbortError')status('Σφάλμα: '+e.message)}
+}
+['i','s'].forEach(k=>{
+  $('#b'+k).onclick=()=>pickFile(k);
+  $(K[k].inp).onchange=e=>{const f=e.target.files[0];if(f)load(f,async wb=>{await ingest(k,wb,f.name,null);setTab(k=='i'?1:2);status()})};
+});
+$('#rf').onclick=async()=>{
+  const ks=['i','s'].filter(k=>S[k].h);
+  if(!ks.length){status('Δεν υπάρχει αποθηκευμένη σύνδεση με αρχείο. Φορτώστε τα αρχεία ξανά με τα κουμπιά «Φόρτωση»'+(FS?'.':' (η αυτόματη ανανέωση δουλεύει σε Chrome ή Edge, όταν η σελίδα ανοίγεται ως αρχείο στον υπολογιστή).'));return}
+  const perms=await Promise.all(ks.map(k=>S[k].h.requestPermission({mode:'read'}).catch(()=>'denied')));
+  const out=[];
+  for(let j=0;j<ks.length;j++){
+    const k=ks[j];
+    if(perms[j]!='granted'){out.push(K[k].label+': δεν δόθηκε άδεια');continue}
+    try{const r=await readHandle(k,S[k].h);out.push(K[k].label+': ενημερώθηκε'+(r.added?', '+r.added+' νέες εγγραφές':''))}
+    catch(e){out.push(K[k].label+': δεν ήταν δυνατή η ανάγνωση του αρχείου')}
+  }
+  status(out.join(' · '));
+};
+(async()=>{
+  try{for(const k of ['i','s']){const v=await DB.get(k);if(v&&v.data&&v.data.length){S[k]=v;if(k=='i')inst=v.data;else stock=v.data}}}catch(e){}
+  if(!inst.length&&stock.length)setTab(2);else{fill();render()}
+  status();
+  for(const k of ['i','s']){
+    const h=S[k].h;if(!h)continue;
+    try{if(await h.queryPermission({mode:'read'})=='granted'){const r=await readHandle(k,h);status('Ενημερώθηκε αυτόματα: '+K[k].label+(r.added?', '+r.added+' νέες εγγραφές':''))}}catch(e){}
+  }
+})();
+function fill(){
+  const opt=(id,vals,all)=>{const s=$(id),v=s.value;s.innerHTML='<option value="">'+all+'</option>'+[...new Set(vals.filter(Boolean))].sort().map(x=>'<option>'+esc(x)+'</option>').join('');s.value=v};
+  if(tab==1){opt('#fm',inst.map(r=>r.man),'Όλοι οι κατασκευαστές');opt('#fc',inst.map(r=>r.contract),'Όλες οι συμβάσεις')}
+  else{opt('#fm',stock.map(r=>r.man),'Όλοι οι προμηθευτές');opt('#fc',stock.map(r=>r.wh),'Όλες οι αποθήκες')}
+}
+function setTab(n){tab=n;$('#t1').classList.toggle('on',n==1);$('#t2').classList.toggle('on',n==2);$('#q').value='';fill();$('#fm').value='';$('#fc').value='';render()}
+$('#t1').onclick=()=>setTab(1);$('#t2').onclick=()=>setTab(2);
+['#q','#fm','#fc'].forEach(s=>$(s).addEventListener('input',render));
+function render(){
+  const terms=norm($('#q').value).split(/\s+/).filter(Boolean),fm=$('#fm').value,fc=$('#fc').value;
+  const src=tab==1?inst:stock,key=tab==1?'contract':'wh';$('.wrap table').className='';
+  if(!src.length){$('#th').innerHTML='';$('#tb').innerHTML='<tr><td class="empty">Φορτώστε το αρχείο Excel ('+(tab==1?'εξοπλισμός':'αποθήκη')+') για να ξεκινήσετε.</td></tr>';$('#cnt').textContent='';return}
+  const res=src.filter(r=>(!fm||r.man==fm)&&(!fc||r[key]==fc)&&terms.every(t=>(r._h||(r._h=norm(Object.values(r).join(' ')))).includes(t)));
+  const shown=res.slice(0,200);$('.wrap table').className=tab==2?'stk':'';
+  if(tab==1){
+    $('#th').innerHTML='<tr><th>Κατασκευαστής</th><th>Εξοπλισμός</th><th>Αρ. σειράς</th><th>Πελάτης / Χώρος</th><th>Σύμβαση</th><th>Εγγύηση</th><th>Λήξη συμβολαίου</th></tr>';
+    $('#tb').innerHTML=shown.map((r,i)=>`<tr class="r ${sel===r?'on':''}" data-i="${i}"><td>${esc(r.man)}</td><td>${esc(r.type)}</td><td>${esc(r.sn)}</td><td>${esc(r.cust)}</td><td>${esc(r.contract)}</td><td>${warOk(r)?'Ναι':'Όχι'}</td><td>${esc(r.end)}</td></tr>`).join('');
+    $('#tb').onclick=e=>{const tr=e.target.closest('tr.r');if(!tr)return;sel=shown[tr.dataset.i];$('#cu').value=sel.cust;
+      $('#nt').value=[sel.remarks&&'Παρατηρήσεις: '+sel.remarks,sel.tech&&'Τεχνική υποστήριξη: '+sel.tech].filter(Boolean).join('\n');side();render()};
+  }else{
+    $('#th').innerHTML='<tr><th>Κωδικός</th><th>Περιγραφή</th><th>Προμηθευτής</th><th>Αποθήκη</th><th>Απόθεμα</th><th>Διαθέσιμο</th><th>Ποσότητα</th><th>Τιμή (€)</th><th>Έκπτωση %</th><th></th></tr>';
+    $('#tb').innerHTML=shown.map((r,i)=>`<tr><td>${esc(r.ref)}</td><td>${esc(r.desc)}</td><td>${esc(r.man)}</td><td>${esc(r.wh)}</td><td>${esc(r.stk)}</td><td>${esc(r.av)}</td><td><input class="q" type="number" min="1" value="1" id="q${i}"></td><td><input class="q" style="width:84px" type="number" min="0" step="0.01" placeholder="Δωρεάν" id="p${i}"></td><td><input class="q" style="width:70px" type="number" min="0" max="100" step="1" value="${autoDisc(sel)||''}" id="d${i}"></td><td><button class="btn sec" data-a="${i}">Προσθήκη</button></td></tr>`).join('');
+    $('#tb').onclick=e=>{const b=e.target.closest('button[data-a]');if(!b)return;const i=b.dataset.a,p=shown[i];parts.push({ref:p.ref,desc:p.desc,man:p.man,qty:+$('#q'+i).value||1,price:parseFloat($('#p'+i).value)||0,disc:(dv=>dv==autoDisc(sel)?null:dv)(parseFloat($('#d'+i).value)||0)});side()};
+  }
+  $('#cnt').textContent=res.length+' αποτελέσματα'+(res.length>200?' (εμφανίζονται τα πρώτα 200, περιορίστε την αναζήτηση)':'');
+}
+function side(){
+  $('#si').innerHTML=sel?`<strong>${esc(sel.man)} ${esc(sel.type)}</strong><br>Αρ. σειράς ${esc(sel.sn)}<br>${esc(sel.cust)}<br><span class="mute">Κωδικός ${esc(sel.code)}<br>Σύμβαση: ${esc(sel.contract)}<br>Εγγύηση: ${warOk(sel)?'Ναι':'Όχι'}${sel.wend?' (έως '+esc(sel.wend)+')':''}</span><br><button class="btn sec" id="cl" style="margin-top:8px;padding:4px 10px">Χωρίς εξοπλισμό</button>`:'Επιλέξτε εξοπλισμό από τη λίστα.';
+  $('#pl').innerHTML=parts.length?parts.map((p,i)=>`<div class="item"><span>${p.qty} × ${esc(p.ref)} <span class="mute">${esc(p.desc)} (${esc(p.man)})</span><br><span class="mute">${p.price>0?'Επί πιστώσει: '+eur(tot(p))+(dsc(p)?' (έκπτωση '+dsc(p)+'%)':''):'Δωρεάν'}</span></span><button data-d="${i}" aria-label="Αφαίρεση">✕</button></div>`).join(''):'Δεν έχουν προστεθεί ανταλλακτικά.';
+  $('#pl').className=parts.length?'':'mute';
+}
+$('#pl').onclick=e=>{const b=e.target.closest('button[data-d]');if(b){parts.splice(b.dataset.d,1);side()}};
+try{$('#to').value=localStorage.getItem('to')||'';$('#rq').value=localStorage.getItem('rq')||'';$('#ol').value=localStorage.getItem('ol')||(/Android|iPhone/i.test(navigator.userAgent)?'n':'c')}catch(e){}
+$('#ol').onchange=()=>{try{localStorage.setItem('ol',$('#ol').value)}catch(e){}};
+const eur=n=>n.toLocaleString('el-GR',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+const num=n=>n.toLocaleString('el-GR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const autoDisc=r=>{const m=r&&norm(r.tech||'').match(/εκπτωση\s*(\d+(?:[.,]\d+)?)\s*%/);return m?parseFloat(m[1].replace(',','.')):0};
+const dsc=p=>(p.disc!=null?p.disc:autoDisc(sel))||0;
+const tot=p=>p.price*p.qty*(1-dsc(p)/100);
+const parseD=s=>{const m=String(s||'').match(/(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{2,4})/);if(!m)return null;let d=+m[1],mo=+m[2],y=+m[3];if(y<100)y+=2000;if(mo>12)[d,mo]=[mo,d];return new Date(y,mo-1,d,23,59,59)};
+const warOk=r=>{if(!/^(ναι|yes)/.test(norm(r.war)))return false;const d=parseD(r.wend);return !d||d>=new Date()};
+const obsText=()=>{const q=cur();return [...(q.sn||q.type?['Κατασκευαστής: '+q.man,'Μοντέλο: '+q.type,'Αρ. σειράς: '+q.sn]:[]),$('#nt').value.trim()].filter(Boolean).join('\n')};
+function docHtml(sel=cur()){
+  const pay=parts.some(p=>p.price>0)?'Επί Πιστώσει (60 ημερών)':'Δωρεάν',rq=esc($('#rq').value);
+  const ys=esc($('#ys').value.trim()),dt=esc($('#dt').value.trim());
+  const d=new Date().toLocaleDateString('el-GR',{day:'2-digit',month:'2-digit',year:'numeric'});
+  const rows=parts.map((p,i)=>`<tr><td>${i+1}</td><td>${esc(p.ref)}</td><td>${esc(sel.man||p.man)}</td><td class='l'>${esc(p.desc)}</td><td>ΤΕΜ</td><td>${p.qty}</td><td>${p.price>0?num(p.price):''}</td><td>${p.price>0&&dsc(p)?dsc(p)+'%':''}</td><td>${p.price>0?num(tot(p)):''}</td></tr>`).join('');
+  return `<style>#doc table{border-collapse:separate;border-spacing:0;border-top:1px solid #000;border-left:1px solid #000}#doc td,#doc th{border-right:1px solid #000;border-bottom:1px solid #000;padding:6px 7px;white-space:normal;text-align:center;font-size:13px;line-height:1.3}#doc td.l{text-align:left}#doc th{position:static;background:#d9d9d9;color:#000}#doc .b{font-weight:700}#doc p{margin:10px 0}</style>
+  <div style='display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:18px'>
+    <div style='border:2px solid #000;border-radius:12px;padding:14px 28px;font-weight:700;font-size:15px'>ΕΠΙΒΕΒΑΙΩΣΗ ΠΑΡΑΓΓΕΛΙΑΣ</div>
+    <div style='text-align:right'><div class='b'>Ε02.01</div><table style='width:270px'><tr><td class='l b'>ΑΡ.ΠΑΡΑΓΓΕΛΙΑΣ:</td><td style='width:70px'></td></tr></table></div>
+  </div>
+  <table style='margin-bottom:22px'>
+    <tr><td class='l' style='width:24%'>ΠΕΛΑΤΗΣ:</td><td class='l b' colspan='3' style='font-size:14px'>${esc(sel.cust)}${$('#ad').value.trim()?`<div style='font-weight:400;font-size:12px;margin-top:3px'>${esc($('#ad').value.trim())}</div>`:''}</td></tr>
+    <tr><td class='l'>ΣΥΝΤΑΚΤΗΣ ΠΑΡΑΓΓ.:</td><td class='l b'>${rq}</td><td class='l b' style='width:20%'>ΗΜΕΡΟΜΗΝΙΑ:</td><td class='l b'>${d}</td></tr>
+    <tr><td class='l'>ΤΡΟΠΟΣ ΠΛΗΡΩΜΗΣ:</td><td class='l' colspan='3'>${pay}</td></tr>
+    <tr><td class='l'>ΣΚΟΠΟΣ ΔΙΑΚΙΝΗΣΗΣ:</td><td class='l' colspan='3'>${esc($('#sk').value)}</td></tr>${ys||dt?`<tr><td class='l'>ΑΡ. ΥΠΟΘΕΣΗΣ:</td><td class='l'>${ys}</td><td class='l'>ΑΡ. ΔΤΕ:</td><td class='l'>${dt}</td></tr>`:''}
+    <tr><td class='l'>ΠΑΡΑΤΗΡΗΣΕΙΣ:</td><td class='l' colspan='3' style='white-space:pre-wrap'>${esc(obsText())}</td></tr>
+  </table>
+  <table><tr><th colspan='9'>ΑΝΤΑΛΛΑΚΤΙΚΑ ${esc(sel.type)}</th></tr>
+  <tr><th>Α/Α</th><th>ΚΩΔΙΚΟΣ</th><th>ΟΙΚΟΣ</th><th>ΠΕΡΙΓΡΑΦΗ</th><th>ΣΥΚ/ΣΙΑ</th><th>ΠΟΣ/ΤΑ</th><th>ΤΙΜΗ</th><th>ΕΚΠΤΩΣΗ</th><th>ΤΕΛΙΚΗ ΤΙΜΗ ΧΩΡΙΣ ΦΠΑ</th></tr>${rows}</table>
+  <p style='margin-top:28px;color:#1f3864;font-weight:700'>➤ Το παρόν αποτελεί οριστική επιβεβαίωση προφορικής παραγγελίας. Παρακαλούμε επικοινωνήστε μαζί μας εντός 24 ωρών σε περίπτωση διαφωνίας με τα αναγραφόμενα.</p>
+  <p style='text-decoration:underline;color:#1f3864'>ΠΡΟΦΟΡΙΚΗ ΕΠΙΒΕΒΑΙΩΣΗ</p>
+  <p style='color:#1f3864;font-weight:700;white-space:pre'>Υπογραφή        Έλεγχος                    ΑΠΟΣΤΟΛΗ :</p>`;
+}
+async function makePdf(){
+  const box=document.createElement('div');box.id='doc';
+  box.style.cssText='position:fixed;left:-10000px;top:0;width:700px;background:#fff;color:#000;font:13px "Segoe UI",Arial,sans-serif;padding:0;box-sizing:border-box';
+  box.innerHTML=docHtml();document.body.appendChild(box);
+  try{
+    const cv=await html2canvas(box,{scale:/Android|iPhone/i.test(navigator.userAgent)?2:3,backgroundColor:'#fff',onclone:d=>{const e=d.getElementById('doc');e.style.position='absolute';e.style.left='0';e.style.top='0'}});
+    const pdf=new jspdf.jsPDF({unit:'mm',format:'a4'}),W=210,H=297,M=12,ph=Math.floor(cv.width*(H-2*M)/(W-2*M));
+    for(let y=0,pg=0;y<cv.height;y+=ph,pg++){
+      const c=document.createElement('canvas');c.width=cv.width;c.height=Math.min(ph,cv.height-y);
+      c.getContext('2d').drawImage(cv,0,y,cv.width,c.height,0,0,cv.width,c.height);
+      if(pg)pdf.addPage();
+      pdf.addImage(c.toDataURL('image/png'),'PNG',M,M,W-2*M,c.height*(W-2*M)/cv.width,undefined,'FAST');
+    }
+    return pdf;
+  }finally{box.remove()}
+}
+const pdfName=()=>'epivevaiosi-paraggelias-'+new Date().toISOString().slice(0,10)+'.pdf';
+async function pdfDl(){
+  $('#msg').textContent='Δημιουργία PDF…';
+  try{const pdf=await makePdf();pdf.save(pdfName());$('#msg').textContent='Το PDF κατέβηκε. Σύρετέ το στο μήνυμα του Outlook ως συνημμένο.'}
+  catch(e){$('#msg').textContent='Δεν ήταν δυνατή η δημιουργία PDF: '+e.message}
+}
+async function emlDl(x){
+  $('#msg').textContent='Δημιουργία προσχεδίου…';
+  try{
+    const pdf=await makePdf(),b64=s=>btoa(unescape(encodeURIComponent(s))),wrap=s=>s.replace(/(.{76})/g,'$1\r\n'),bd='----=_pt'+Date.now();
+    const pb=pdf.output('datauristring').split(',')[1];
+    const eml=['X-Unsent: 1','To: '+$('#to').value,'Subject: =?UTF-8?B?'+b64(x.subject)+'?=','MIME-Version: 1.0','Content-Type: multipart/mixed; boundary="'+bd+'"','','--'+bd,'Content-Type: text/plain; charset=utf-8','Content-Transfer-Encoding: base64','',wrap(b64(x.body)),'--'+bd,'Content-Type: application/pdf; name="epivevaiosi.pdf"','Content-Transfer-Encoding: base64','Content-Disposition: attachment; filename="epivevaiosi.pdf"','',wrap(pb),'--'+bd+'--',''].join('\r\n');
+    const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([eml],{type:'message/rfc822'}));a.download='aitima-antallaktikon.eml';a.click();
+    $('#msg').textContent='Κατέβηκε το προσχέδιο με συνημμένο PDF. Ανοίξτε το με διπλό κλικ στο Outlook.';
+  }catch(e){$('#msg').textContent='Σφάλμα: '+e.message}
+}
+$('#si').onclick=e=>{if(e.target.id=='cl'){sel=null;side();render()}};
+$('#sh').onclick=async()=>{
+  const x=mail();if(!x)return;
+  $('#msg').textContent='Δημιουργία PDF…';
+  try{
+    const pdf=await makePdf(),f=new File([pdf.output('blob')],pdfName(),{type:'application/pdf'}),data={files:[f],title:x.subject,text:x.body};
+    if(navigator.canShare&&navigator.canShare(data)){await navigator.share(data);$('#msg').textContent='Επιλέξτε Outlook στο μενού κοινοποίησης.'}
+    else{pdf.save(pdfName());$('#msg').textContent='Η κοινοποίηση δεν υποστηρίζεται εδώ. Το PDF κατέβηκε.'}
+  }catch(e){if(e.name!='AbortError')$('#msg').textContent='Δεν ήταν δυνατή η κοινοποίηση ('+e.message+'). Πατήστε ξανά.'}
+};
+$('#pd').onclick=()=>{if(mail())pdfDl()};
+const STUB={man:'',type:'',code:'',sn:'',cust:'',contract:'',war:'',wend:'',end:'',tech:'',remarks:''};
+const cur=()=>({...(sel||STUB),cust:$('#cu').value.trim()});
+function mail(){
+  if(!(sel||$('#cu').value.trim())||!parts.length){$('#msg').textContent='Επιλέξτε εξοπλισμό ή πληκτρολογήστε πελάτη και προσθέστε τουλάχιστον ένα ανταλλακτικό.';return null}
+  return mail2(cur());
+}
+function mail2(sel){
+  const m=$('#msg');
+  if(!sel||!parts.length){m.textContent='Επιλέξτε εξοπλισμό και προσθέστε τουλάχιστον ένα ανταλλακτικό.';return null}
+  if(!$('#sk').value){m.textContent='Επιλέξτε σκοπό διακίνησης.';return null}
+  try{localStorage.setItem('to',$('#to').value);localStorage.setItem('rq',$('#rq').value)}catch(e){}
+  m.textContent='';
+  const subject=`Αίτημα ανταλλακτικών: ${sel.sn||sel.type?sel.man+' '+sel.type+' Α/Σ '+sel.sn:sel.cust} (${$('#ur').value})`;
+  const charged=parts.some(p=>p.price>0);
+  const body=[(new Date().getHours()<12?'Καλημέρα':'Καλησπέρα')+' σας,','','Παρακαλώ για την εκτέλεση του παρακάτω αιτήματος ανταλλακτικών.','','Τύπος δελτίου: '+(charged?'Δελτίο αποστολής - τιμολόγιο':'Δελτίο αποστολής'),'Σκοπός διακίνησης: '+$('#sk').value,...($('#ys').value.trim()?['Αρ. Υπόθεσης: '+$('#ys').value.trim()]:[]),...($('#dt').value.trim()?['Αρ. ΔΤΕ: '+$('#dt').value.trim()]:[]),'',
+  ...(sel.sn||sel.type?['ΕΞΟΠΛΙΣΜΟΣ','Κατασκευαστής: '+sel.man,'Τύπος: '+sel.type,'Αρ. σειράς: '+sel.sn,'Κωδικός είδους: '+sel.code,'Πελάτης / Χώρος: '+sel.cust,...($('#ad').value.trim()?['Διεύθυνση: '+$('#ad').value.trim()]:[]),'Σύμβαση: '+sel.contract,
+  'Λήξη συμφωνητικού: '+(sel.end||'-'),'Εγγύηση: '+(warOk(sel)?'Ναι':'Όχι')+(sel.wend?' (έως '+sel.wend+')':''),'']:['Πελάτης / Χώρος: '+sel.cust,...($('#ad').value.trim()?['Διεύθυνση: '+$('#ad').value.trim()]:[]),'']),
+  'ΑΝΤΑΛΛΑΚΤΙΚΑ',...parts.flatMap(p=>[`- ${p.qty} x ${p.ref} | ${p.desc} | ${p.man}`,...(p.price>0?['  ΤΡΟΠΟΣ ΠΛΗΡΩΜΗΣ: Επί Πιστώσει (60 ημερών)','  Κόστος: '+eur(tot(p))+(p.qty>1||dsc(p)?' ('+p.qty+' × '+eur(p.price)+(dsc(p)?', έκπτωση '+dsc(p)+'%':'')+')':'')]:['  ΤΡΟΠΟΣ ΠΛΗΡΩΜΗΣ: Δωρεάν'])]),'',
+  ...($('#ap').checked?['Συνημμένο: Επιβεβαίωση παραγγελίας (PDF)','']:[]),'Προτεραιότητα: '+$('#ur').value,'Αιτών: '+$('#rq').value,'Ημερομηνία: '+new Date().toLocaleDateString('el-GR'),
+  ...(sel.sn||sel.type||$('#nt').value.trim()?['','Σημειώσεις:',...(sel.sn||sel.type?['Κατασκευαστής: '+sel.man,'Μοντέλο: '+sel.type,'Αρ. σειράς: '+sel.sn]:[]),...($('#nt').value?[$('#nt').value.replace(/\r?\n/g,'\r\n')]:[])]:[]),'','Ευχαριστώ.'].join('\r\n');
+  return {subject,body};
+}
+$('#eml').onclick=()=>{
+  if($('#ol').value=='n'){const y=mail();if(y){window.open('https://outlook.office.com/mail/deeplink/compose?to='+encodeURIComponent($('#to').value)+'&subject='+encodeURIComponent(y.subject)+'&body='+encodeURIComponent(y.body),'_blank');if($('#ap').checked)pdfDl()}return}
+  const x=mail();if(!x)return;
+  if($('#ap').checked){emlDl(x);return}
+  const a=document.createElement('a');a.href='mailto:'+encodeURIComponent($('#to').value)+'?subject='+encodeURIComponent(x.subject)+'&body='+encodeURIComponent(x.body);a.click();
+  $('#msg').textContent='Αν δεν άνοιξε το Outlook, χρησιμοποιήστε το κουμπί «Αντιγραφή κειμένου».';
+};
+$('#cp').onclick=async()=>{
+  const x=mail();if(!x)return;
+  const t='Θέμα: '+x.subject+'\r\n\r\n'+x.body,pv=$('#pv');
+  try{await navigator.clipboard.writeText(t);$('#msg').textContent='Το κείμενο αντιγράφηκε. Επικολλήστε το σε νέο μήνυμα στο Outlook.'}
+  catch(e){pv.value=t;pv.hidden=false;pv.select();$('#msg').textContent='Η αντιγραφή δεν επιτρέπεται εδώ. Επιλέξτε το κείμενο παρακάτω (Ctrl+A, Ctrl+C).'}
+};
+fill();render();side();
+</script>
+<script>if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+</body>
+</html>
